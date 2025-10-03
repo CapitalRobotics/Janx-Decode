@@ -22,7 +22,6 @@ public class DriveBase {
     public DriveBase(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
         this.mecanum = initDriveBase();
-        this.imu = initIMU();
     }
 
     public MecanumDrive initDriveBase() {
