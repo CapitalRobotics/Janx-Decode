@@ -1,22 +1,21 @@
- package org.firstinspires.ftc.teamcode.decod;
+package org.mrpsvt.capital_robotics.teleop;
 
 import static com.qualcomm.robotcore.util.Range.clip;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.seattlesolvers.solverslib.drivebase.MecanumDrive;
+import com.seattlesolvers.solverslib.hardware.RevIMU;
 
-import org.firstinspires.ftc.teamcode.TemplateJanx;
+import org.mrpsvt.capital_robotics.control.ControlMap;
+import org.mrpsvt.capital_robotics.robot_core.DriveBase;
+import org.mrpsvt.capital_robotics.robot_core.DriveConstants;
+
+import java.util.Objects;
 
 @TeleOp(name = "fiy wheal")
 public class FlyWheel extends OpMode {
-    // Wheel motors
-    private DcMotorEx frontRight;
-    private DcMotorEx backRight;
-    private DcMotorEx frontLeft;
-    private DcMotorEx backLeft;
-
-    private final int Speed = 18000;
 
     // Flywheels
     private DcMotorEx flywheel;
@@ -28,15 +27,13 @@ public class FlyWheel extends OpMode {
 
     // Track flywheel velocity for ramping
     private double currentFlywheelVelocity = 0;
-
+    private ControlMap controls;
+    private MecanumDrive drive;
+    private DriveConstants driveConstants;
+    private RevIMU imu; // Assuming you have an IMU class for field-centric driving
     @Override
     public void init() {
-        TemplateJanx janx = new TemplateJanx(hardwareMap);
-        janx.wheelInit("fr", "br", "bl", "fl");
-        frontLeft = janx.fl;
-        frontRight = janx.fr;
-        backRight = janx.br;
-        backLeft = janx.bl;
+
 
         // Map flywheel motors
         flywheel = hardwareMap.get(DcMotorEx.class, "flywheel");
@@ -51,12 +48,17 @@ public class FlyWheel extends OpMode {
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
+        DriveBase driveBase = new DriveBase(hardwareMap);
+        controls = new ControlMap(gamepad1, gamepad2);
+        drive = driveBase.mecanum;
+        imu = driveBase.imu;
+        driveConstants = new DriveConstants();
     }
 
     @Override
     public void loop() {
         // Drivetrain control
-        mecanum(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+
 
         // Flywheel control with ramping (on gamepad2 A)
         if (gamepad2.a) {
@@ -83,33 +85,48 @@ public class FlyWheel extends OpMode {
         telemetry.addData("Flywheel1 Actual", flywheel.getVelocity());
         telemetry.addData("Flywheel2 Actual", flywheel2.getVelocity());
         telemetry.update();
-    }
-
-    // Mecanum drive math
-    private void mecanum(double LSY, double LSX, double RSX) {
-        // Cube inputs for finer control
-        double ly = Math.pow(LSY, 3);   // forward/back
-        double lx = -Math.pow(LSX, 3);  // strafe
-        double rx = -Math.pow(RSX, 3);  // rotation
-
-        if (Math.abs(LSY) > 0.01 || Math.abs(LSX) > 0.01 || Math.abs(RSX) > 0.01) {
-            frontRight.setVelocity(Speed * (clip((ly - lx), -1, 1) - rx));
-            frontLeft.setVelocity(Speed * (clip((ly + lx), -1, 1) + rx));
-            backRight.setVelocity(Speed * (clip((ly + lx), -1, 1) - rx));
-            backLeft.setVelocity(Speed * (clip((ly - lx), -1, 1) + rx));
-        } else {
-            stopMotors();
+        if (Objects.equals(driveConstants.robotDriveMode, DriveConstants.ROBOT_CENTRIC)) {
+            drive.driveRobotCentric(
+                    controls.driver1.getRightX() * driveConstants.forwardSpeed,
+                    controls.driver1.getRightY() * driveConstants.strafeSpeed,
+                    controls.driver1.getRightX() * driveConstants.turnSpeed
+            );
+        } else if (Objects.equals(driveConstants.robotDriveMode, DriveConstants.FIELD_CENTRIC)) {
+            drive.driveFieldCentric(
+                    controls.driver1.getLeftY() * driveConstants.forwardSpeed,
+                    controls.driver1.getRightX() * driveConstants.strafeSpeed,
+                    controls.driver1.getRightX() * driveConstants.turnSpeed,
+                    imu.getRotation2d().getDegrees()  // IMU heading would go here
+            );
         }
     }
 
-    // Stop all motors
-    private void stopMotors() {
-        frontLeft.setVelocity(0);
-        backLeft.setVelocity(0);
-        frontRight.setVelocity(0);
-        backRight.setVelocity(0);
-        flywheel.setVelocity(0);
-        flywheel2.setVelocity(0);
+    // Mecanum drive math
+//    @Override
+//    public void init() {
+//        DriveBase driveBase = new DriveBase(hardwareMap);
+//        controls = new ControlMap(gamepad1, gamepad2);
+//        drive = driveBase.mecanum;
+//        imu = driveBase.imu;
+//        driveConstants = new DriveConstants();
+//    }
+
+//    @Override
+//    public void loop() {
+//        if (Objects.equals(driveConstants.robotDriveMode, DriveConstants.ROBOT_CENTRIC)) {
+//            drive.driveRobotCentric(
+//                    controls.driver1.getRightX() * driveConstants.forwardSpeed,
+//                    controls.driver1.getRightY() * driveConstants.strafeSpeed,
+//                    controls.driver1.getRightX() * driveConstants.turnSpeed
+//            );
+//        } else if (Objects.equals(driveConstants.robotDriveMode, DriveConstants.FIELD_CENTRIC)) {
+//            drive.driveFieldCentric(
+//                    controls.driver1.getLeftY() * driveConstants.forwardSpeed,
+//                    controls.driver1.getRightX() * driveConstants.strafeSpeed,
+//                    controls.driver1.getRightX() * driveConstants.turnSpeed,
+//                    imu.getRotation2d().getDegrees()  // IMU heading would go here
+//            );
+//        }
     }
-}
+
 
