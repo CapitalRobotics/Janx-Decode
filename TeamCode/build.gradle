@@ -47,5 +47,5 @@ dependencies {
     implementation "org.solverslib:core:SNAPSHOT-7cdcc66" // core
     implementation "org.solverslib:pedroPathing:SNAPSHOT-7cdcc66" // pedroPathing
 
-    implementation "com.acmerobotics.dashboard:dashboard:0.4.17" // FTC Dashboard
+    implementation "com.acmerobotics.dashboard:dashboard:0.5.1" // FTC Dashboard
 }
