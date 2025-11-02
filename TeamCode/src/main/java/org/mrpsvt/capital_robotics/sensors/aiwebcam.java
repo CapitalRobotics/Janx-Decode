@@ -15,7 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import java.util.List;
 
     @TeleOp(name = "AprilTag Detection", group = "Vision")
-    public class ggg extends LinearOpMode {
+    public class aiwebcam extends LinearOpMode {
 
         private AprilTagProcessor aprilTag;
         private VisionPortal visionPortal;
@@ -41,9 +41,9 @@ import java.util.List;
                     telemetry.update();
 
                     // Save CPU resources; can resume streaming when needed
-                    if (gamepad1.dpad_down) {
+                    if (gamepad1.y) {
                         visionPortal.stopStreaming();
-                    } else if (gamepad1.dpad_up) {
+                    } else if (gamepad1.x) {
                         visionPortal.resumeStreaming();
                     }
 
@@ -64,7 +64,7 @@ import java.util.List;
 
             // Create the vision portal using the camera
             visionPortal = new VisionPortal.Builder()
-                    .setCamera(hardwareMap.get(WebcamName.class, "webcam"))
+                    .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
                     .addProcessor(aprilTag)
                     .build();
         }

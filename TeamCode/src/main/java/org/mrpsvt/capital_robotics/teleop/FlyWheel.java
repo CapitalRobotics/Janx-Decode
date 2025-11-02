@@ -1,6 +1,6 @@
 package org.mrpsvt.capital_robotics.teleop;
 
-import static com.qualcomm.robotcore.util.Range.clip;
+
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -15,7 +15,8 @@ import org.mrpsvt.capital_robotics.robot_core.DriveConstants;
 import java.util.Objects;
 
 @TeleOp(name = "fiy wheal")
-public class FlyWheel extends OpMode {
+public class FlyWheel extends OpMode
+{
 
     // Flywheels
     private DcMotorEx flywheel;
@@ -31,8 +32,10 @@ public class FlyWheel extends OpMode {
     private MecanumDrive drive;
     private DriveConstants driveConstants;
     private RevIMU imu; // Assuming you have an IMU class for field-centric driving
+
     @Override
-    public void init() {
+    public void init()
+    {
 
 
         // Map flywheel motors
@@ -56,22 +59,26 @@ public class FlyWheel extends OpMode {
     }
 
     @Override
-    public void loop() {
-        // Drivetrain control
+    public void loop()
+    {
+
 
 
         // Flywheel control with ramping (on gamepad2 A)
-        if (gamepad2.a) {
+        if (gamepad2.a)
+        {
             // Ramp up to target speed
-            currentFlywheelVelocity = Math.min(
+            currentFlywheelVelocity = Math.min
+            (
                     currentFlywheelVelocity + RAMP_RATE,
                     TARGET_FLYWHEEL
             );
-        } else {
+        } else
+        {
             // Ramp down smoothly to 0
-            currentFlywheelVelocity = Math.max(
-                    currentFlywheelVelocity - RAMP_RATE,
-                    0
+            currentFlywheelVelocity = Math.max
+            (
+                    currentFlywheelVelocity - RAMP_RATE, 0
             );
         }
 
@@ -85,14 +92,20 @@ public class FlyWheel extends OpMode {
         telemetry.addData("Flywheel1 Actual", flywheel.getVelocity());
         telemetry.addData("Flywheel2 Actual", flywheel2.getVelocity());
         telemetry.update();
-        if (Objects.equals(driveConstants.robotDriveMode, DriveConstants.ROBOT_CENTRIC)) {
-            drive.driveRobotCentric(
+
+        //drive code
+        if (Objects.equals(driveConstants.robotDriveMode, DriveConstants.ROBOT_CENTRIC))
+        {
+            drive.driveRobotCentric
+            (
                     controls.driver1.getRightX() * driveConstants.forwardSpeed,
                     controls.driver1.getRightY() * driveConstants.strafeSpeed,
                     controls.driver1.getRightX() * driveConstants.turnSpeed
             );
-        } else if (Objects.equals(driveConstants.robotDriveMode, DriveConstants.FIELD_CENTRIC)) {
-            drive.driveFieldCentric(
+        } else if (Objects.equals(driveConstants.robotDriveMode, DriveConstants.FIELD_CENTRIC))
+        {
+            drive.driveFieldCentric
+            (
                     controls.driver1.getLeftY() * driveConstants.forwardSpeed,
                     controls.driver1.getRightX() * driveConstants.strafeSpeed,
                     controls.driver1.getRightX() * driveConstants.turnSpeed,
@@ -101,32 +114,4 @@ public class FlyWheel extends OpMode {
         }
     }
 
-    // Mecanum drive math
-//    @Override
-//    public void init() {
-//        DriveBase driveBase = new DriveBase(hardwareMap);
-//        controls = new ControlMap(gamepad1, gamepad2);
-//        drive = driveBase.mecanum;
-//        imu = driveBase.imu;
-//        driveConstants = new DriveConstants();
-//    }
-
-//    @Override
-//    public void loop() {
-//        if (Objects.equals(driveConstants.robotDriveMode, DriveConstants.ROBOT_CENTRIC)) {
-//            drive.driveRobotCentric(
-//                    controls.driver1.getRightX() * driveConstants.forwardSpeed,
-//                    controls.driver1.getRightY() * driveConstants.strafeSpeed,
-//                    controls.driver1.getRightX() * driveConstants.turnSpeed
-//            );
-//        } else if (Objects.equals(driveConstants.robotDriveMode, DriveConstants.FIELD_CENTRIC)) {
-//            drive.driveFieldCentric(
-//                    controls.driver1.getLeftY() * driveConstants.forwardSpeed,
-//                    controls.driver1.getRightX() * driveConstants.strafeSpeed,
-//                    controls.driver1.getRightX() * driveConstants.turnSpeed,
-//                    imu.getRotation2d().getDegrees()  // IMU heading would go here
-//            );
-//        }
-    }
-
-
+}
