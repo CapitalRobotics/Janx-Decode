@@ -30,7 +30,7 @@ public class linearservo extends LinearOpMode {
         linearServo.setPosition(currentPosition);
 
         telemetry.addData("Status", "Initialized");
-        telemetry.addData("Controls", "A=Retract, B=Extend, X=Mid");
+        telemetry.addData("Controls", "left bumper=Retract, right bumper=Extend");
         telemetry.addData("Controls", "DPad Up/Down for fine control");
         telemetry.update();
 
