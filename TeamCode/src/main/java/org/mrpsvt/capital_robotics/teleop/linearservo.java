@@ -5,12 +5,13 @@ package org.mrpsvt.capital_robotics.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.seattlesolvers.solverslib.hardware.ServoEx;
 
 @TeleOp(name="Linear Servo Control", group="Linear Opmode")
 public class linearservo extends LinearOpMode {
 
     // Declare servo
-    private Servo linearServo;
+    public ServoEx linearServo;
 
     // Servo position constants (0.0 to 1.0)
     private static final double RETRACTED_POSITION = 0.0;
@@ -24,7 +25,7 @@ public class linearservo extends LinearOpMode {
     public void runOpMode() {
 
         // Initialize the servo
-        linearServo = hardwareMap.get(Servo.class, "linear_servo");
+        linearServo = new ServoEx(hardwareMap, "linear_servo");
 
         // Set initial position
         linearServo.setPosition(currentPosition);
@@ -57,7 +58,7 @@ public class linearservo extends LinearOpMode {
             // Display telemetry
             telemetry.addData("Status", "Running");
             telemetry.addData("Current Position", "%.2f", currentPosition);
-            telemetry.addData("Servo Position", "%.2f", linearServo.getPosition());
+            telemetry.addData("Servo Position", "%.2f", linearServo.getRawPosition());
             telemetry.update();
 
             // Small delay to prevent excessive updates
