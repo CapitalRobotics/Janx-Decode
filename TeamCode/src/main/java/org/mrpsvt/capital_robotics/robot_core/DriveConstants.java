@@ -7,7 +7,7 @@ public class DriveConstants {
     public static String FIELD_CENTRIC = "field_centric";
 
     public float strafeSpeed = 1.0f;
-    public float forwardSpeed = 1.0f;
+    public float forwardSpeed =1.0f;
     public float turnSpeed = 1.0f;
 
     public final String frontLeftMotorName = "fl";
