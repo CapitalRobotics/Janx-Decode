@@ -10,7 +10,7 @@ import com.seattlesolvers.solverslib.hardware.motors.Motor;
 
 
 public class DriveBase {
-    HardwareMap hardwareMap;
+    static HardwareMap hardwareMap;
     Motor frontLeft;
     Motor frontRight;
     Motor backLeft;
@@ -39,5 +39,10 @@ public class DriveBase {
         RevIMU imu = new RevIMU(hardwareMap);
         imu.init();
         return imu;
+    }
+
+    public static HardwareMap getHardwareMap()
+    {
+        return hardwareMap;
     }
 }

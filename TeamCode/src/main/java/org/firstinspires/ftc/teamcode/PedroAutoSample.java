@@ -113,7 +113,8 @@ public class PedroAutoSample extends CommandOpMode {
         buildPaths();
 
         // Create the autonomous command sequence
-        SequentialCommandGroup autonomousSequence = new SequentialCommandGroup(
+        SequentialCommandGroup autonomousSequence = new SequentialCommandGroup
+        (
                 // Score preload
                 new FollowPathCommand(follower, scorePreload),
                 openOuttakeClaw(),
