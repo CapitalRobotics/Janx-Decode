@@ -1,4 +1,4 @@
-package org.mrpsvt.capital_robotics.auto;
+package org.firstinspires.ftc.teamcode;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierLine;
@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import org.mrpsvt.capital_robotics.robot_core.DriveBase;
 
 @Autonomous
-public abstract class scrimmageMoveForward extends CommandOpMode
+public abstract class move extends CommandOpMode
 {
     private Follower followerElement;
     private PathChain pathElement;
@@ -44,14 +44,11 @@ public abstract class scrimmageMoveForward extends CommandOpMode
         compilePathChain();
 
         SequentialCommandGroup order = new SequentialCommandGroup
-        (
-                new FollowPathCommand(followerElement, pathElement).setGlobalMaxPower(0.5)
-        );
-    }
+                (
+                        new FollowPathCommand(followerElement, pathElement).setGlobalMaxPower(0.5)
+                );
 
-    @Override
-    public void run()
-    {
         super.run();
     }
 }
+

@@ -9,7 +9,8 @@ import com.seattlesolvers.solverslib.hardware.RevIMU;
 import com.seattlesolvers.solverslib.hardware.motors.Motor;
 
 
-public class DriveBase {
+public class DriveBase
+{
     static HardwareMap hardwareMap;
     Motor frontLeft;
     Motor frontRight;
@@ -19,12 +20,14 @@ public class DriveBase {
     public MecanumDrive mecanum;
     public RevIMU imu;
 
-    public DriveBase(HardwareMap hardwareMap) {
+    public DriveBase(HardwareMap hardwareMap)
+    {
         this.hardwareMap = hardwareMap;
         this.mecanum = initDriveBase();
     }
 
-    public MecanumDrive initDriveBase() {
+    public MecanumDrive initDriveBase()
+    {
         DriveConstants constants = new DriveConstants();
         frontLeft = new Motor(hardwareMap, constants.frontLeftMotorName);
         frontRight = new Motor(hardwareMap, constants.frontRightMotorName);
@@ -35,12 +38,14 @@ public class DriveBase {
         return mecanum;
     }
 
-    public RevIMU initIMU() {
+    public RevIMU initIMU()
+    {
         RevIMU imu = new RevIMU(hardwareMap);
         imu.init();
         return imu;
     }
 
+    //this was created for the scrimageMoveForeward file
     public static HardwareMap getHardwareMap()
     {
         return hardwareMap;
