@@ -48,7 +48,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
  *
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
-*/
+ */
 @TeleOp(name = "Sensor: MR Gyro", group = "Sensor")
 @Disabled
 public class SensorMRGyro extends LinearOpMode {
@@ -130,16 +130,16 @@ public class SensorMRGyro extends LinearOpMode {
       int zAxisScalingCoefficient = modernRoboticsI2cGyro.getZAxisScalingCoefficient();
 
       telemetry.addLine()
-        .addData("dx", formatRate(rates.xRotationRate))
-        .addData("dy", formatRate(rates.yRotationRate))
-        .addData("dz", "%s deg/s", formatRate(rates.zRotationRate));
+              .addData("dx", formatRate(rates.xRotationRate))
+              .addData("dy", formatRate(rates.yRotationRate))
+              .addData("dz", "%s deg/s", formatRate(rates.zRotationRate));
       telemetry.addData("angle", "%s deg", formatFloat(zAngle));
       telemetry.addData("heading", "%3d deg", heading);
       telemetry.addData("integrated Z", "%3d", integratedZ);
       telemetry.addLine()
-        .addData("rawX", formatRaw(rawX))
-        .addData("rawY", formatRaw(rawY))
-        .addData("rawZ", formatRaw(rawZ));
+              .addData("rawX", formatRaw(rawX))
+              .addData("rawY", formatRaw(rawY))
+              .addData("rawZ", formatRaw(rawZ));
       telemetry.addLine().addData("z offset", zAxisOffset).addData("z coeff", zAxisScalingCoefficient);
       telemetry.update();
     }

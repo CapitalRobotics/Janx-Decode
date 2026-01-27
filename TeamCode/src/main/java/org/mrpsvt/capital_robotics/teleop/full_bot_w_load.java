@@ -1,6 +1,5 @@
 package org.mrpsvt.capital_robotics.teleop;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.linearOpMode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -17,7 +16,7 @@ import org.mrpsvt.capital_robotics.robot_core.DriveConstants;
 import java.util.Objects;
 
 @TeleOp(name="w_lode")
-public class full_bot_w_lode extends OpMode {
+public class full_bot_w_load extends OpMode {
     // Flywheels
     private DcMotorEx flywheel;
     private DcMotorEx flywheel2;
@@ -25,16 +24,16 @@ public class full_bot_w_lode extends OpMode {
     // Servos
 //    private Servo nemo;
     private Servo claw;
-
+    private Servo loop;
     // Constants
     private static final int TARGET_FLYWHEEL = 5090; // target ticks/sec
     private static final int RAMP_RATE = 900;        // smaller step = smoother ramp
 
     // Servo position constants
-    private static final double RETRACTED_POSITION = 0.0;
-    private static final double EXTENDED_POSITION = 1.0;
+
     private static final double CLAW_CLOSED = 1.0;
     private static final double CLAW_OPEN = 0.25;
+    private static final double loop_close = 5;
 
     // Track flywheel velocity for ramping
     private double currentFlywheelVelocity = 0;
@@ -68,8 +67,9 @@ public class full_bot_w_lode extends OpMode {
 //        nemo.setPosition(currentLinearPosition);
 
         claw = hardwareMap.get(Servo.class, "claw");
-        claw.setPosition(CLAW_OPEN); // Start with claw open
-
+        claw.setPosition(CLAW_CLOSED); // Start with claw open
+        loop = hardwareMap.get(Servo.class,"loop");
+        loop.setPosition(loop_close);
         // Initialize drive system
         DriveBase driveBase = new DriveBase(hardwareMap);
         controls = new ControlMap(gamepad1, gamepad2);
@@ -101,52 +101,63 @@ public class full_bot_w_lode extends OpMode {
             );
         }
 
-        // Flywheel control with ramping (on gamepad2 A)
+        // Flywheel control:
+        // Verison with ramping (Gamepad 2, button: A)
         if (gamepad2.a) {
-            // Ramp up to target speed
+            // Ramp up launch motors up to target speed
             currentFlywheelVelocity = Math.min(
                     currentFlywheelVelocity + RAMP_RATE,
                     TARGET_FLYWHEEL
             );
         } else {
-            // Ramp down smoothly to 0
+            // Ramp launch motors back down smoothly to 0
             currentFlywheelVelocity = Math.max(
                     currentFlywheelVelocity - RAMP_RATE,
                     0
             );
         }
-        // Lodewheel ON/OFF at fixed speed
+        // Apply to both launch motors
+        flywheel.setVelocity(currentFlywheelVelocity);
+        flywheel2.setVelocity(currentFlywheelVelocity);
+
+
+
+
+
+
+        // Intake motor control:
+        // (Gamepad 2, button: d-pad down)
+
+        // ON/OFF at fixed speed
         if (gamepad2.dpad_down) {
             lodewheel.setVelocity(bob); // ON
         } else {
             lodewheel.setVelocity(0); // OFF }
 
-            // Apply to both flywheels
-            flywheel.setVelocity(currentFlywheelVelocity);
-            flywheel2.setVelocity(currentFlywheelVelocity);
-
-            // Linear servo control - preset positions with debouncing
-//            if (gamepad2.left_bumper && !lastLeftBumper) {
-//                currentLinearPosition = RETRACTED_POSITION;
-//                nemo.setPosition(currentLinearPosition);
-//            } else if (gamepad2.right_bumper && !lastRightBumper) {
-//                currentLinearPosition = EXTENDED_POSITION;
-//                nemo.setPosition(currentLinearPosition);
-//            }
-
             // Update button states
             lastLeftBumper = gamepad2.left_bumper;
             lastRightBumper = gamepad2.right_bumper;
 
-            // Claw control with triggers
+            // Launch loading servo control:
+            // (Gamepad 2, button: back trigger)
+
+            // Close claw: left trigger
             if (gamepad2.left_trigger > 0.1) {
-                // Close claw
                 claw.setPosition(CLAW_CLOSED);
+            // Open claw: right trigger
             } else if (gamepad2.right_trigger > 0.1) {
-                // Open claw
                 claw.setPosition(CLAW_OPEN);
             }
-
+            if(gamepad1.y) {
+                // move to 0 degrees.
+                loop.setPosition(0);
+            } else if (gamepad1.dpad_right) {
+                // move to 90 degrees.
+                loop.setPosition(5);
+            } else if (gamepad1.dpad_left) {
+                // move to 180 degrees.
+                loop.setPosition(.5);
+            }
             // Telemetry
             telemetry.addData("Status", "Running");
             telemetry.addData("Flywheel Target", TARGET_FLYWHEEL);

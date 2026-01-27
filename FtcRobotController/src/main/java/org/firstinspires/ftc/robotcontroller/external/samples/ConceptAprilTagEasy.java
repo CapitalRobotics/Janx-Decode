@@ -88,24 +88,22 @@ public class ConceptAprilTagEasy extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
-        if (opModeIsActive()) {
-            while (opModeIsActive()) {
+        while (opModeIsActive()) {
 
-                telemetryAprilTag();
+            telemetryAprilTag();
 
-                // Push telemetry to the Driver Station.
-                telemetry.update();
+            // Push telemetry to the Driver Station.
+            telemetry.update();
 
-                // Save CPU resources; can resume streaming when needed.
-                if (gamepad1.dpad_down) {
-                    visionPortal.stopStreaming();
-                } else if (gamepad1.dpad_up) {
-                    visionPortal.resumeStreaming();
-                }
-
-                // Share the CPU.
-                sleep(20);
+            // Save CPU resources; can resume streaming when needed.
+            if (gamepad1.dpad_down) {
+                visionPortal.stopStreaming();
+            } else if (gamepad1.dpad_up) {
+                visionPortal.resumeStreaming();
             }
+
+            // Share the CPU.
+            sleep(20);
         }
 
         // Save more CPU resources when camera is no longer needed.
@@ -124,10 +122,10 @@ public class ConceptAprilTagEasy extends LinearOpMode {
         // Create the vision portal the easy way.
         if (USE_WEBCAM) {
             visionPortal = VisionPortal.easyCreateWithDefaults(
-                hardwareMap.get(WebcamName.class, "Webcam 1"), aprilTag);
+                    hardwareMap.get(WebcamName.class, "Webcam 1"), aprilTag);
         } else {
             visionPortal = VisionPortal.easyCreateWithDefaults(
-                BuiltinCameraDirection.BACK, aprilTag);
+                    BuiltinCameraDirection.BACK, aprilTag);
         }
 
     }   // end method initAprilTag()

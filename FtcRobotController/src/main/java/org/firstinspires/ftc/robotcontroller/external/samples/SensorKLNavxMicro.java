@@ -100,14 +100,14 @@ public class SensorKLNavxMicro extends LinearOpMode {
             Orientation angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
             telemetry.addLine()
-                .addData("dx", formatRate(rates.xRotationRate))
-                .addData("dy", formatRate(rates.yRotationRate))
-                .addData("dz", "%s deg/s", formatRate(rates.zRotationRate));
+                    .addData("dx", formatRate(rates.xRotationRate))
+                    .addData("dy", formatRate(rates.yRotationRate))
+                    .addData("dz", "%s deg/s", formatRate(rates.zRotationRate));
 
             telemetry.addLine()
-                .addData("heading", formatAngle(angles.angleUnit, angles.firstAngle))
-                .addData("roll", formatAngle(angles.angleUnit, angles.secondAngle))
-                .addData("pitch", "%s deg", formatAngle(angles.angleUnit, angles.thirdAngle));
+                    .addData("heading", formatAngle(angles.angleUnit, angles.firstAngle))
+                    .addData("roll", formatAngle(angles.angleUnit, angles.secondAngle))
+                    .addData("pitch", "%s deg", formatAngle(angles.angleUnit, angles.thirdAngle));
             telemetry.update();
 
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop

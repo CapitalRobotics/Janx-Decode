@@ -249,7 +249,7 @@ public class SensorOctoQuadLocalization extends LinearOpMode
             }
 
             telemetry.addLine(String.format("<b><font color='%s' >%s</font></b>",
-                                            warnFlash ? "red" : "white", warnString));
+                    warnFlash ? "red" : "white", warnString));
         }
     }
 }

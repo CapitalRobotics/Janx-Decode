@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Autonomous(name="blue far")
+@Autonomous(name="blue close")
 public class blue_close extends LinearOpMode {
     // Flywheels
     private DcMotorEx flywheel;

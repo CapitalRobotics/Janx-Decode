@@ -81,27 +81,25 @@ public class ConceptAprilTagSwitchableCameras extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
-        if (opModeIsActive()) {
-            while (opModeIsActive()) {
+        while (opModeIsActive()) {
 
-                telemetryCameraSwitching();
-                telemetryAprilTag();
+            telemetryCameraSwitching();
+            telemetryAprilTag();
 
-                // Push telemetry to the Driver Station.
-                telemetry.update();
+            // Push telemetry to the Driver Station.
+            telemetry.update();
 
-                // Save CPU resources; can resume streaming when needed.
-                if (gamepad1.dpad_down) {
-                    visionPortal.stopStreaming();
-                } else if (gamepad1.dpad_up) {
-                    visionPortal.resumeStreaming();
-                }
-
-                doCameraSwitching();
-
-                // Share the CPU.
-                sleep(20);
+            // Save CPU resources; can resume streaming when needed.
+            if (gamepad1.dpad_down) {
+                visionPortal.stopStreaming();
+            } else if (gamepad1.dpad_up) {
+                visionPortal.resumeStreaming();
             }
+
+            doCameraSwitching();
+
+            // Share the CPU.
+            sleep(20);
         }
 
         // Save more CPU resources when camera is no longer needed.
@@ -120,13 +118,13 @@ public class ConceptAprilTagSwitchableCameras extends LinearOpMode {
         webcam1 = hardwareMap.get(WebcamName.class, "Webcam 1");
         webcam2 = hardwareMap.get(WebcamName.class, "Webcam 2");
         CameraName switchableCamera = ClassFactory.getInstance()
-            .getCameraManager().nameForSwitchableCamera(webcam1, webcam2);
+                .getCameraManager().nameForSwitchableCamera(webcam1, webcam2);
 
         // Create the vision portal by using a builder.
         visionPortal = new VisionPortal.Builder()
-            .setCamera(switchableCamera)
-            .addProcessor(aprilTag)
-            .build();
+                .setCamera(switchableCamera)
+                .addProcessor(aprilTag)
+                .build();
 
     }   // end method initAprilTag()
 

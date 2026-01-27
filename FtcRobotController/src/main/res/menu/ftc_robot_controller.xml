@@ -46,10 +46,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     android:title="@string/restart_robot_menu_item"/>
 
   <item
-    android:id="@+id/action_configure_robot"
-    android:orderInCategory="300"
-    app:showAsAction="never"
-    android:title="@string/configure_robot_menu_item"/>
+      android:id="@+id/action_configure_robot"
+      android:icon="@color/almost_dark_blue"
+      android:orderInCategory="300"
+      android:title="@string/configure_robot_menu_item"
+      app:showAsAction="never" />
 
   <item
     android:id="@+id/action_program_and_manage"
@@ -64,10 +65,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     android:title="@string/inspection_mode_menu_item"/>
 
   <item
-    android:id="@+id/action_about"
-    android:orderInCategory="999"
-    android:icon="@android:drawable/ic_menu_info_details"
-    android:title="@string/about_menu_item"/>
+      android:id="@+id/action_about"
+      android:icon="@android:drawable/ic_menu_info_details"
+      android:orderInCategory="999"
+      android:title="@string/about_menu_item" />
 
   <item
     android:id="@+id/action_exit_app"

@@ -62,24 +62,5 @@ public class SensorAndyMarkTOF extends LinearOpMode {
         // methods associated with the AndyMarkTOF class.
         AndyMarkTOF sensorTimeOfFlight = (AndyMarkTOF) sensorDistance;
 
-        telemetry.addData(">>", "Press start to continue");
-        telemetry.update();
-
-        waitForStart();
-        while(opModeIsActive()) {
-            // generic DistanceSensor methods.
-            telemetry.addData("deviceName", sensorDistance.getDeviceName() );
-            telemetry.addData("range", String.format("%.01f mm", sensorDistance.getDistance(DistanceUnit.MM)));
-            telemetry.addData("range", String.format("%.01f cm", sensorDistance.getDistance(DistanceUnit.CM)));
-            telemetry.addData("range", String.format("%.01f m", sensorDistance.getDistance(DistanceUnit.METER)));
-            telemetry.addData("range", String.format("%.01f in", sensorDistance.getDistance(DistanceUnit.INCH)));
-
-            // AndyMarkTOF specific methods.
-            telemetry.addData("ID", String.format("%x", sensorTimeOfFlight.getModelID()));
-            telemetry.addData("did time out", Boolean.toString(sensorTimeOfFlight.didTimeoutOccur()));
-
-            telemetry.update();
-        }
     }
-
 }
