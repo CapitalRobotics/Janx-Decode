@@ -30,7 +30,6 @@ public class full_bot_w_load extends OpMode {
     private static final int RAMP_RATE = 900;        // smaller step = smoother ramp
 
     // Servo position constants
-
     private static final double CLAW_CLOSED = 1.0;
     private static final double CLAW_OPEN = 0.25;
     private static final double loop_close = 5;
@@ -39,10 +38,16 @@ public class full_bot_w_load extends OpMode {
     private double currentFlywheelVelocity = 0;
     private double currentLinearPosition = 0.5;
 
-    private final double bob =6000;
+    private final double bob = 6000;
+
     // Button state tracking for debouncing
     private boolean lastLeftBumper = false;
     private boolean lastRightBumper = false;
+
+    // Speed control variables
+    private float forwardSpeed = 0.5f;
+    private float strafeSpeed = 0.5f;
+    private float turnSpeed = 0.5f;
 
     private ControlMap controls;
     private MecanumDrive drive;
@@ -85,18 +90,29 @@ public class full_bot_w_load extends OpMode {
 
     @Override
     public void loop() {
+        // Speed control toggle
+        if (gamepad1.b) {
+            forwardSpeed = 0.3f;  // Slow mode
+            strafeSpeed = 0.3f;
+            turnSpeed = 0.3f;
+        } else if (gamepad1.a){
+            forwardSpeed = 0.5f;  // Normal mode
+            strafeSpeed = 0.5f;
+            turnSpeed = 0.5f;
+        }
+
         // Drivetrain control
         if (Objects.equals(driveConstants.robotDriveMode, DriveConstants.ROBOT_CENTRIC)) {
             drive.driveRobotCentric(
-                    controls.driver1.getLeftX() * -driveConstants.forwardSpeed,
-                    controls.driver1.getLeftY() * -driveConstants.strafeSpeed,
-                    controls.driver1.getRightX() * driveConstants.turnSpeed
+                    controls.driver1.getLeftX() * -forwardSpeed,
+                    controls.driver1.getLeftY() * -strafeSpeed,
+                    controls.driver1.getRightX() * turnSpeed
             );
         } else if (Objects.equals(driveConstants.robotDriveMode, DriveConstants.FIELD_CENTRIC)) {
             drive.driveFieldCentric(
-                    controls.driver1.getLeftY() * driveConstants.forwardSpeed,
-                    controls.driver1.getLeftX() * driveConstants.strafeSpeed,
-                    controls.driver1.getRightX() * driveConstants.turnSpeed,
+                    controls.driver1.getLeftY() * forwardSpeed,
+                    controls.driver1.getLeftX() * strafeSpeed,
+                    controls.driver1.getRightX() * turnSpeed,
                     imu.getRotation2d().getDegrees()
             );
         }
@@ -120,53 +136,48 @@ public class full_bot_w_load extends OpMode {
         flywheel.setVelocity(currentFlywheelVelocity);
         flywheel2.setVelocity(currentFlywheelVelocity);
 
-
-
-
-
-
         // Intake motor control:
         // (Gamepad 2, button: d-pad down)
-
         // ON/OFF at fixed speed
         if (gamepad2.dpad_down) {
             lodewheel.setVelocity(bob); // ON
         } else {
-            lodewheel.setVelocity(0); // OFF }
-
-            // Update button states
-            lastLeftBumper = gamepad2.left_bumper;
-            lastRightBumper = gamepad2.right_bumper;
-
-            // Launch loading servo control:
-            // (Gamepad 2, button: back trigger)
-
-            // Close claw: left trigger
-            if (gamepad2.left_trigger > 0.1) {
-                claw.setPosition(CLAW_CLOSED);
-            // Open claw: right trigger
-            } else if (gamepad2.right_trigger > 0.1) {
-                claw.setPosition(CLAW_OPEN);
-            }
-            if(gamepad1.y) {
-                // move to 0 degrees.
-                loop.setPosition(0);
-            } else if (gamepad1.dpad_right) {
-                // move to 90 degrees.
-                loop.setPosition(5);
-            } else if (gamepad1.dpad_left) {
-                // move to 180 degrees.
-                loop.setPosition(.5);
-            }
-            // Telemetry
-            telemetry.addData("Status", "Running");
-            telemetry.addData("Flywheel Target", TARGET_FLYWHEEL);
-            telemetry.addData("Flywheel Commanded", currentFlywheelVelocity);
-            telemetry.addData("Flywheel1 Actual", flywheel.getVelocity());
-            telemetry.addData("Flywheel2 Actual", flywheel2.getVelocity());
-            telemetry.addData("Linear Servo", "%.2f", currentLinearPosition);
-            telemetry.addData("Claw Position", "%.2f", claw.getPosition());
-            telemetry.update();
+            lodewheel.setVelocity(0); // OFF
         }
+
+        // Update button states
+        lastLeftBumper = gamepad2.left_bumper;
+        lastRightBumper = gamepad2.right_bumper;
+
+        // Launch loading servo control:
+        // (Gamepad 2, button: back trigger)
+        // Close claw: left trigger
+        if (gamepad2.left_trigger > 0.1) {
+            claw.setPosition(CLAW_CLOSED);
+            // Open claw: right trigger
+        } else if (gamepad2.right_trigger > 0.1) {
+            claw.setPosition(CLAW_OPEN);
+        }
+
+        if (gamepad2.y) {
+            // move to 0 degrees.
+            loop.setPosition(0);
+        } else if (gamepad2.dpad_right) {
+            // move to 90 degrees.
+            loop.setPosition(5);
+        } else if (gamepad2.dpad_left) {
+            // move to 180 degrees.
+            loop.setPosition(.5);
+        }
+
+        // Telemetry
+        telemetry.addData("Status", "Running");
+        telemetry.addData("Flywheel Target", TARGET_FLYWHEEL);
+        telemetry.addData("Flywheel Commanded", currentFlywheelVelocity);
+        telemetry.addData("Flywheel1 Actual", flywheel.getVelocity());
+        telemetry.addData("Flywheel2 Actual", flywheel2.getVelocity());
+        telemetry.addData("Linear Servo", "%.2f", currentLinearPosition);
+        telemetry.addData("Claw Position", "%.2f", claw.getPosition());
+        telemetry.update();
     }
 }
