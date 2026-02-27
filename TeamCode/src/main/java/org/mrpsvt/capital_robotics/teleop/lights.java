@@ -5,11 +5,11 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.LED;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.seattlesolvers.solverslib.drivebase.MecanumDrive;
 import com.seattlesolvers.solverslib.hardware.RevIMU;
 
+import org.firstinspires.ftc.teamcode.GoBildaPrismDriver;
 import org.mrpsvt.capital_robotics.control.ControlMap;
 import org.mrpsvt.capital_robotics.robot_core.DriveBase;
 import org.mrpsvt.capital_robotics.robot_core.DriveConstants;
@@ -41,7 +41,7 @@ public class lights extends OpMode {
     private static final byte PCA9685_LED2_ON_L     = 0x0E; // CH2 base
     private static final int  PCA9685_MAX_PWM       = 4095;
 
-    private LED ledDriver;
+    private GoBildaPrismDriver ledDriver;
     private boolean ledsEnabled = true;
     private boolean lastButtonB  = false; // debounce for LED toggle (gp2 B)
     private boolean lastButtonX  = false; // debounce for color cycle  (gp2 X)
@@ -103,7 +103,7 @@ public class lights extends OpMode {
         // --- LED Driver ---
         // In your robot configuration, add an "I2C Device (Synch)" named "prism_led"
         // on the I²C bus connected to the GoBilda Prism driver (default address 0x40).
-        ledDriver = hardwareMap.get(LED.class, "prism_led");
+        ledDriver = hardwareMap.get(GoBildaPrismDriver.class, "prism_led");
         initPCA9685();
         setLedColor(0, 255, 0); // Start green (idle)
 
