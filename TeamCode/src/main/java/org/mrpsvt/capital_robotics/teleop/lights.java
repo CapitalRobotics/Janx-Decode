@@ -319,7 +319,7 @@ public class lights extends OpMode {
     }
 
     /**
-     * Write a 12-bit PWM value to one PCA9685 channel.
+     *     Write a 12-bit PWM value to one PCA9685 channel.
      * ON count is always 0 (phase start at tick 0).
      * OFF count = pwmValue (the tick at which the signal goes low).
      *
