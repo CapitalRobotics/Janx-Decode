@@ -26,7 +26,7 @@ public class full_bot_w_load extends OpMode {
     private Servo claw;
     private Servo loop;
     // Constants
-    private static final int TARGET_FLYWHEEL = 5090; // target ticks/sec
+    private static final int TARGET_FLYWHEEL = 9999999; // target ticks/sec
     private static final int RAMP_RATE = 900;        // smaller step = smoother ramp
 
     // Servo position constants

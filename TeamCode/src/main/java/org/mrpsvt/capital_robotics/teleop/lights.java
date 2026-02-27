@@ -44,7 +44,7 @@ public class lights extends OpMode {
     private Servo loop;
 
     // Constants
-    private static final int    TARGET_FLYWHEEL = 5090;
+    private static final int    TARGET_FLYWHEEL = 999999;
     private static final int    RAMP_RATE       = 900;
     private static final double CLAW_CLOSED     = 1.0;
     private static final double CLAW_OPEN       = 0.25;
