@@ -294,7 +294,7 @@ public class lights extends OpMode {
     private void initPCA9685() {
         // Clear sleep bit (bit 4) to enable oscillator
         // 0x00 = normal mode, auto-increment enabled (bit 5 set → 0x20)
-         // AI + normal mode
+        // AI + normal mode
         // Allow oscillator to stabilize
         try { Thread.sleep(10); } catch (InterruptedException ignored) {}
     }
