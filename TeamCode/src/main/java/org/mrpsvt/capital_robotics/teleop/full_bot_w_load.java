@@ -30,8 +30,8 @@ public class full_bot_w_load extends OpMode {
     private static final int RAMP_RATE = 900;        // smaller step = smoother ramp
 
     // Servo position constants
-    private static final double CLAW_CLOSED = 1.0;
-    private static final double CLAW_OPEN = 0.1;
+    private static final double CLAW_CLOSED = 0.1;
+    private static final double CLAW_OPEN = 1.0;
     private static final double loop_close = 5;
 
     // Track flywheel velocity for ramping
