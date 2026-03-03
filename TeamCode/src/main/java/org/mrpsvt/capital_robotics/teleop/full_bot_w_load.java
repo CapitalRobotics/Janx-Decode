@@ -125,7 +125,13 @@ public class full_bot_w_load extends OpMode {
                     currentFlywheelVelocity + RAMP_RATE,
                     TARGET_FLYWHEEL
             );
+<<<<<<< HEAD
 
+=======
+            if (currentFlywheelVelocity > TARGET_FLYWHEEL) {
+                currentFlywheelVelocity = TARGET_FLYWHEEL;
+            }
+>>>>>>> ae28bcc08b32a30462944a4c76558f8111fee0a0
         } else {
             // Ramp launch motors back down smoothly to 0
             currentFlywheelVelocity = Math.max(
