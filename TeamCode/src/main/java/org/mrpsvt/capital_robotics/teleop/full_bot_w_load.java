@@ -31,7 +31,7 @@ public class full_bot_w_load extends OpMode {
 
     // Servo position constants
     private static final double CLAW_CLOSED = 1.0;
-    private static final double CLAW_OPEN = 0.05;
+    private static final double CLAW_OPEN = 0.1;
     private static final double loop_close = 5;
 
     // Track flywheel velocity for ramping
@@ -125,6 +125,9 @@ public class full_bot_w_load extends OpMode {
                     currentFlywheelVelocity + RAMP_RATE,
                     TARGET_FLYWHEEL
             );
+            if (currentFlywheelVelocity > TARGET_FLYWHEEL) {
+                currentFlywheelVelocity = TARGET_FLYWHEEL;
+            }
         } else {
             // Ramp launch motors back down smoothly to 0
             currentFlywheelVelocity = Math.max(
