@@ -140,13 +140,13 @@ public class lights extends OpMode {
         // --- Flywheel ramping ---
         if (gamepad2.a) {
             currentFlywheelVelocity = Math.min(currentFlywheelVelocity + RAMP_RATE, TARGET_FLYWHEEL);
-<<<<<<< HEAD
+
             if (currentFlywheelVelocity > 5060) {
                 currentFlywheelVelocity = 5060;
-=======
+            }
             if (currentFlywheelVelocity > TARGET_FLYWHEEL) {
                 currentFlywheelVelocity = TARGET_FLYWHEEL;
->>>>>>> ae28bcc08b32a30462944a4c76558f8111fee0a0
+
             }
         } else {
             // FIX 1: Flywheels ramp DOWN when A is released instead of staying on
