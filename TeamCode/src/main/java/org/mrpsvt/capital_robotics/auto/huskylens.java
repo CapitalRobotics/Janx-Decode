@@ -18,7 +18,8 @@ public class huskylens extends LinearOpMode {
     private final int TARGET_TAG_ID = 1; // Change this to your target tag
 
     @Override
-    public void runOpMode() {
+    public void runOpMode()
+    {
         // Initialize motors
         leftFront = hardwareMap.get(DcMotor.class, "leftFront");
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");
