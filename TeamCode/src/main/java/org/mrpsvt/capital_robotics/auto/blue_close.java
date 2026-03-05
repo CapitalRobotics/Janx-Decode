@@ -34,7 +34,8 @@ public class blue_close extends LinearOpMode {
     private static final double LODEWHEEL_SPEED = 8;
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() throws InterruptedException
+    {
         // Initialize hardware
         initializeHardware();
 
@@ -44,13 +45,15 @@ public class blue_close extends LinearOpMode {
 
         waitForStart();
 
-        if (opModeIsActive()) {
+        if (opModeIsActive())
+        {
             // Execute autonomous sequence
             autonomousSequence();
         }
     }
 
-    private void initializeHardware() {
+    private void initializeHardware()
+    {
         // Map flywheel motors
         flywheel = hardwareMap.get(DcMotorEx.class, "flywheel");
         flywheel2 = hardwareMap.get(DcMotorEx.class, "flywheel2");
@@ -86,7 +89,8 @@ public class blue_close extends LinearOpMode {
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    private void autonomousSequence() throws InterruptedException {
+    private void autonomousSequence() throws InterruptedException
+    {
         // Example autonomous sequence - customize as needed
 
         // Step 1: Close claw to grab preloaded game element

@@ -87,30 +87,22 @@ public class blue_far extends LinearOpMode {
 
         // Step 1: Close claw to grab preloaded game element
 
-
-
-        telemetry.addData("step", "0: temporary auto strafe");
-        telemetry.update();
-        driveDistance(0, 1.5, 0, 500);
-
-
-
         // Step 2: Drive forward to position
-        /*
+
         telemetry.addData("Step", "2: Driving forward");
         telemetry.update();
         driveDistance(-1, 0, 0, 1500);
-//-forwers +back weras
+        //-forwers +back weras
         telemetry.addData("Step", "2: Driving forward");
         telemetry.update();
         driveDistance(0, 0, -1, 250);
-//+ to the rigth - to the lefft
+        //+ to the rigth - to the lefft
         // Step 3: Spin up flywheels
         telemetry.addData("Step", "3: Spinning up flywheels");
         telemetry.update();
         rampFlywheels(TARGET_FLYWHEEL, 3000);
 
-*/
+
         telemetry.addData("Step", "1: Closing claw");
         telemetry.update();
         setClaw(CLAW_OPEN);
