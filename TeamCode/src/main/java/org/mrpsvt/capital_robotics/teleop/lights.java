@@ -170,11 +170,11 @@ public class lights extends OpMode {
         }
 
         // --- Loop servo ---
-        if (gamepad2.y) {
+        if (gamepad2.dpad_left) {
             loop.setPosition(0);
         } else if (gamepad2.dpad_right) {
             loop.setPosition(LOOP_CLOSE);
-        } else if (gamepad2.dpad_left) {
+        } else if (gamepad2.y) {
             loop.setPosition(0.5);
         }
 

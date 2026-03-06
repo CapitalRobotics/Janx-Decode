@@ -169,13 +169,13 @@ public class full_bot_w_load extends OpMode {
             claw.setPosition(CLAW_OPEN);
         }
 
-        if (gamepad2.y) {
+        if (gamepad2.dpad_left) {
             // move to 0 degrees.
             loop.setPosition(0);
         } else if (gamepad2.dpad_right) {
             // move to 90 degrees.
             loop.setPosition(5);
-        } else if (gamepad2.dpad_left) {
+        } else if (gamepad2.y) {
             // move to 180 degrees.
             loop.setPosition(.5);
         }
