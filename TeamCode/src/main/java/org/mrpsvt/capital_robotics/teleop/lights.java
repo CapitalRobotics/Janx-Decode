@@ -15,7 +15,7 @@ import org.mrpsvt.capital_robotics.robot_core.DriveConstants;
 
 import java.util.Objects;
 
-@TeleOp(name="w_")
+@TeleOp(name="w_lights")
 public class lights extends OpMode {
 
     // -------------------------------------------------------------------------
@@ -46,8 +46,8 @@ public class lights extends OpMode {
     // Constants
     private static final int    TARGET_FLYWHEEL = 999999;
     private static final int    RAMP_RATE       = 900;
-    private static final double CLAW_CLOSED     = 1.0;
-    private static final double CLAW_OPEN       = 0.25;
+    private static final double CLAW_CLOSED     = 1;
+    private static final double CLAW_OPEN       = 0.1;
     private static final double LOOP_CLOSE      = 5.0;
     private static final double BOB             = 6000;
 
@@ -170,11 +170,11 @@ public class lights extends OpMode {
         }
 
         // --- Loop servo ---
-        if (gamepad2.y) {
+        if (gamepad2.dpad_left) {
             loop.setPosition(0);
         } else if (gamepad2.dpad_right) {
             loop.setPosition(LOOP_CLOSE);
-        } else if (gamepad2.dpad_left) {
+        } else if (gamepad2.y) {
             loop.setPosition(0.5);
         }
 

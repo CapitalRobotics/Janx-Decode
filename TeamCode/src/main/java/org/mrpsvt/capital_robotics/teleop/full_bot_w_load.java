@@ -30,7 +30,7 @@ public class full_bot_w_load extends OpMode {
     private static final int RAMP_RATE = 900;        // smaller step = smoother ramp
 
     // Servo position constants
-    private static final double CLAW_CLOSED = 1.0;
+    private static final double CLAW_CLOSED = 1;
     private static final double CLAW_OPEN = 0.1;
     private static final double loop_close = 5;
 
@@ -167,13 +167,13 @@ public class full_bot_w_load extends OpMode {
             claw.setPosition(CLAW_OPEN);
         }
 
-        if (gamepad2.y) {
+        if (gamepad2.dpad_left) {
             // move to 0 degrees.
             loop.setPosition(0);
         } else if (gamepad2.dpad_right) {
             // move to 90 degrees.
             loop.setPosition(5);
-        } else if (gamepad2.dpad_left) {
+        } else if (gamepad2.y) {
             // move to 180 degrees.
             loop.setPosition(.5);
         }

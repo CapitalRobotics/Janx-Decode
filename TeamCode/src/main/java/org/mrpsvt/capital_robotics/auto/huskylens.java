@@ -18,7 +18,8 @@ public class huskylens extends LinearOpMode {
     private final int TARGET_TAG_ID = 1; // Change this to your target tag
 
     @Override
-    public void runOpMode() {
+    public void runOpMode()
+    {
         // Initialize motors
         leftFront = hardwareMap.get(DcMotor.class, "leftFront");
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");
@@ -57,48 +58,69 @@ public class huskylens extends LinearOpMode {
                 {
                     targetFound = true;
 
-                    int tagX = block.x;      // X position (0-320, center is ~160)
-                    int tagWidth = block.width;  // Size of tag from side to side (bigger = closer)
-
-                    //int tagY = block.y; y position (0-240, center is ~120)
-                    //int tagHeight = block.height; size of tag from top to bottom (bigger = closer)
+                    int tagX = block.x; // X position (0-320, center is ~160)
+                    int tagY = block.y; // YY position (0-240, center is ~120)
+                    // upper left of screen is (0, 0)
+                    int tagWidth = block.width; // Size of tag from side to side (bigger = closer)
+                    int tagHeight = block.height; // height of tag from top to bottom
 
                     telemetry.addData("Target Tag ID", block.id);
                     telemetry.addData("Tag X", tagX);
                     telemetry.addData("Tag Width", tagWidth);
-                    //telemetry.addData("Tag Y", tagY);
-                    //telemetry.addData("Tag Height", tagHeight);
-                    /*
-                    soooo, logic for strafing based on the size of the april tag on the husky lens
-                    pixel size:
+                    telemetry.addData("Tag Y", tagY);
+                    telemetry.addData("Tag Height", tagHeight);
+                    telemetry.update();
 
-                    when the april tag is y pixels tall, and x pixels wide, it is a certain
-                    distance away from the camera. So ill create a while-loop with a nested if
-                    statement logic, to have the bot drive foreward/bakward/strafe to have the april
-                    tag positioned perfectly to shoot. this is meant to curcumvent the issue of not
-                    having depth perception.
+                    int x = 160;
+                    int y = 120;
+                    int h = 41;
+                    int w = 41;
+                    int change = 0;
 
-                    while (TagX =! [fill this in/x] && Tagheight =! [fill this in/h])
+                    while (tagX >= (x - 3) || tagX <= (x + 3))
                     {
-                        //first fit the x
-                        if (tagX < x)
+                        telemetry.addData("action", "triangulating x");
+                        if (tagX > x && change == 0)
                         {
-                            driveDistance(0, (x - tagX), 0, (time, i dunno \(0-0)/);
-                            telemetry.addData("Action", "Strafing left");
+                            driveDistance(0, 0.5, 0, 10);
+                            tagX = block.x;
+                            if (tagX < x)
+                            {
+                                change++;
+                            }
                         }
-                        else if (tagX > x)
+                        else if (tagX > x && change > 1)
                         {
-                            driveDistance(0, (x - tagX), 0, (time));
-                            telemetry.addData("Action", "Strafing right");
+                            driveDistance(0, 0.5, 0, (long)(10 * Math.pow(.75, change)));
+                            tagX = block.x;
+                            if (tagX < x)
+                            {
+                                change++;
+                            }
                         }
-                        else {}
-
-                        if (tagHeight < y)
+                        else if (tagX < x && change == 0)
                         {
-                            driveDistance((h - tagHeight), 0, 0, (time));
-                            telemetry.addData(
-                     */
+                            driveDistance(0, -0.5, 0, 10);
+                            tagX = block.x;
+                            if (tagX > x)
+                            {
+                                change++;
+                            }
+                        }
+                        else if (tagX < x && change > 1)
+                        {
+                            driveDistance(0, -0.5, 0, (long)(10 * Math.pow(.75, change)));
+                            tagX = block.x;
+                            if (tagX > x)
+                            {
+                                change++;
+                            }
+                        }
+                    }
 
+
+
+                    /*
                     // Move based on tag position
                     if (tagX < 140)
                     {
@@ -125,12 +147,13 @@ public class huskylens extends LinearOpMode {
                         stopMotors();
                         telemetry.addData("Action", "Arrived at Tag!");
                     }
-
+                    */
                     break; // Found our tag, stop searching
                 }
             }
 
-            if (!targetFound) {
+            if (!targetFound)
+            {
                 // Target tag not found - stop
                 stopMotors();
                 telemetry.addData("Action", "Stopped - Tag Not Found");
@@ -140,28 +163,68 @@ public class huskylens extends LinearOpMode {
         }
     }
 
-    private void moveForward(double power) {
+    private void moveForward(double power)
+    {
         leftFront.setPower(power);
         rightFront.setPower(power);
         leftBack.setPower(power);
         rightBack.setPower(power);
     }
 
-    private void turnLeft(double power) {
+    private void turnLeft(double power)
+    {
         leftFront.setPower(-power);
         rightFront.setPower(power);
         leftBack.setPower(-power);
         rightBack.setPower(power);
     }
 
-    private void turnRight(double power) {
+    private void turnRight(double power)
+    {
         leftFront.setPower(power);
         rightFront.setPower(-power);
         leftBack.setPower(power);
         rightBack.setPower(-power);
     }
 
-    private void stopMotors() {
+    private void stopMotors()
+    {
+        leftFront.setPower(0);
+        rightFront.setPower(0);
+        leftBack.setPower(0);
+        rightBack.setPower(0);
+    }
+    private void driveDistance(double forward, double strafe, double turn, long milliseconds) {
+        // Mecanum drive calculations
+        double frontLeftPower = forward + strafe + turn;
+        double frontRightPower = forward - strafe - turn;
+        double backLeftPower = forward - strafe + turn;
+        double backRightPower = forward + strafe - turn;
+
+        // Normalize powers if any exceed 1.0
+        double maxPower = Math.max
+        (
+                Math.max(Math.abs(frontLeftPower), Math.abs(frontRightPower)),
+                Math.max(Math.abs(backLeftPower), Math.abs(backRightPower))
+        );
+
+        if (maxPower > 1.0)
+        {
+            frontLeftPower /= maxPower;
+            frontRightPower /= maxPower;
+            backLeftPower /= maxPower;
+            backRightPower /= maxPower;
+        }
+
+        // Set motor powers
+        leftFront.setPower(frontLeftPower);
+        rightFront.setPower(frontRightPower);
+        leftBack.setPower(backLeftPower);
+        rightBack.setPower(backRightPower);
+
+        sleep(milliseconds);
+
+        // Stop motors
         leftFront.setPower(0);
         rightFront.setPower(0);
         leftBack.setPower(0);
