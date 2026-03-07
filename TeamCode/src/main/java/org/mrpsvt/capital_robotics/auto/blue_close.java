@@ -99,10 +99,12 @@ public class blue_close extends LinearOpMode {
         // Step 2: Drive forward to position
         telemetry.addData("Step", "2: Driving forward");
         telemetry.update();
-        driveDistance(.5, 0, 0, 900);
+        driveDistance(.5, 0, 0, 1700);
+        /*
         telemetry.addData("Step", "2: Driving forward");
         telemetry.update();
         driveDistance(0, -.1, 0, 100);
+        */
 
 //+ to the rigth - to the lefft
 //        // Step 3: Spin up flywheels
