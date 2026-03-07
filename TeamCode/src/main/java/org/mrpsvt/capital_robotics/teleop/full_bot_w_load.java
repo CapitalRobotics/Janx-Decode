@@ -126,8 +126,6 @@ public class full_bot_w_load extends OpMode {
                     TARGET_FLYWHEEL
             );
 
-
-
             if (currentFlywheelVelocity > TARGET_FLYWHEEL) {
                 currentFlywheelVelocity = TARGET_FLYWHEEL;
             }

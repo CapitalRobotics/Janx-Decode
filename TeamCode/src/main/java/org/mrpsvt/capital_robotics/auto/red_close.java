@@ -83,58 +83,15 @@ public class red_close extends LinearOpMode {
     }
 
     private void autonomousSequence() throws InterruptedException {
-        // Example autonomous sequence - customize as needed
-
-        // Step 1: Close claw to grab preloaded game element
-
-
         // Step 2: Drive forward to position
         telemetry.addData("Step", "2: Driving forward");
         telemetry.update();
-        driveDistance(-1, 0, 0, 1500);
-//-forwers +back weras
+        driveDistance(.5, 0, 0, 900);
         telemetry.addData("Step", "2: Driving forward");
         telemetry.update();
-        driveDistance(0, 0, -1, 250);
+        driveDistance(0, .1, 0, 100);
+
 //+ to the rigth - to the lefft
-        // Step 3: Spin up flywheels
-        telemetry.addData("Step", "3: Spinning up flywheels");
-        telemetry.update();
-        rampFlywheels(TARGET_FLYWHEEL, 3000);
-
-
-        telemetry.addData("Step", "1: Closing claw");
-        telemetry.update();
-        setClaw(CLAW_OPEN);
-        sleep(500);
-        // Step 4: Run lodewheel to push ball into flywheels and launch
-//        telemetry.addData("Step", "4: Pushing ball and launching");
-//        telemetry.update();
-//        lodewheel.setVelocity(LODEWHEEL_SPEED);
-//        sleep(2000);
-//        lodewheel.setVelocity(0);
-
-        // Step 5: Spin down flywheels
-        telemetry.addData("Step", "5: Spinning down");
-        telemetry.update();
-        rampFlywheels(0, 2000);
-
-        // Step 6: Strafe right
-//        telemetry.addData("Step", "6: Strafing right");
-//        telemetry.update();
-//        driveDistance(0, 0.5, 0, 1000);
-
-        // Step 7: Open claw
-        telemetry.addData("Step", "7: Opening claw");
-        telemetry.update();
-        setClaw(CLAW_OPEN);
-        sleep(500);
-
-        // Step 8: Drive backward
-//        telemetry.addData("Step", "8: Driving backward");
-//        telemetry.update();
-//        driveDistance(-0.3, 0, 0, 800);
-
         telemetry.addData("Status", "Autonomous Complete");
         telemetry.update();
     }

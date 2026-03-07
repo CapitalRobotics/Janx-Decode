@@ -82,7 +82,7 @@ public class huskylens extends LinearOpMode {
                         telemetry.addData("action", "triangulating x");
                         if (tagX > x && change == 0)
                         {
-                            driveDistance(0, 1, 0, 300);
+                            driveDistance(0, 0.5, 0, 10);
                             tagX = block.x;
                             if (tagX < x)
                             {
@@ -91,7 +91,7 @@ public class huskylens extends LinearOpMode {
                         }
                         else if (tagX > x && change > 1)
                         {
-                            driveDistance(0, 1, 0, (long)(300 * Math.pow(.75, change)));
+                            driveDistance(0, 0.5, 0, (long)(10 * Math.pow(.75, change)));
                             tagX = block.x;
                             if (tagX < x)
                             {
@@ -100,7 +100,7 @@ public class huskylens extends LinearOpMode {
                         }
                         else if (tagX < x && change == 0)
                         {
-                            driveDistance(0, -1, 0, 300);
+                            driveDistance(0, -0.5, 0, 10);
                             tagX = block.x;
                             if (tagX > x)
                             {
@@ -109,7 +109,7 @@ public class huskylens extends LinearOpMode {
                         }
                         else if (tagX < x && change > 1)
                         {
-                            driveDistance(0, -1, 0, (long)(300 * Math.pow(.75, change)));
+                            driveDistance(0, -0.5, 0, (long)(10 * Math.pow(.75, change)));
                             tagX = block.x;
                             if (tagX > x)
                             {
