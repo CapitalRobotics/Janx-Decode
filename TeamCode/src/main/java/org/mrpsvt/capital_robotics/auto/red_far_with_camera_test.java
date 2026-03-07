@@ -95,14 +95,13 @@ public class red_far_with_camera_test extends LinearOpMode
         telemetry.addData("Step", "2: Driving forward");
         telemetry.update();
         driveDistance(-1, 0, 0, 1500);
-//-forwers +back weras
+        //-forwers +back weras
         telemetry.addData("Step", "2: Driving forward");
         telemetry.update();
         driveDistance(0, 0, 1, 250);
-//+ to the rigth - to the lefft
+        //+ to the rigth - to the lefft
 
         // step 2.5: finding x
-        //
         huskylens thisLens = new huskylens();
         thisLens.runOpMode();
         //

@@ -31,7 +31,7 @@ public class Blue_close_w_huskey extends LinearOpMode
     private static final double CLAW_OPEN = 0.25;
     private static final double loop_open = 0;
     private static final double loop_closed= 5;
-
+    private husky_method ourHuskeymethod;
     private static final double LODEWHEEL_SPEED = 8;
 
     @Override
@@ -43,6 +43,8 @@ public class Blue_close_w_huskey extends LinearOpMode
         telemetry.addData("Status", "Initialized");
         telemetry.addData("Ready", "Waiting for start");
         telemetry.update();
+        ourHuskeymethod = new husky_method(frontLeft, frontRight, backLeft, backRight, hardwareMap, telemetry, milliseconds -> sleep(milliseconds));
+        ourHuskeymethod.beforeStart();
 
         waitForStart();
 
@@ -105,8 +107,7 @@ public class Blue_close_w_huskey extends LinearOpMode
         // step 2.5: activate camera homing for x coordinate
         telemetry.addData("step", "huskey x homing");
         telemetry.update();
-        huskylens thisLens = new huskylens();
-        thisLens.runOpMode();
+        ourHuskeymethod.homingLens();
 
         /*
         //+ to the rigth - to the lefft
