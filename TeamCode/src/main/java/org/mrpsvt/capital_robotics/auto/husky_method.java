@@ -82,6 +82,7 @@ public class husky_method
                 int h = 41;
                 int w = 41;
                 int change = 0;
+                int lor = 0;
 
                 // driveDistance(), - = foreward, - = right, unknown
                 while (tagX > (x - 3) || tagX < (x + 3))
@@ -89,38 +90,53 @@ public class husky_method
                     telemetry.addData("action", "triangulating x");
                     if (tagX > x && change == 0)
                     {
-                        driveDistance(0, .3, 0, 400);
+                        driveDistance(0, .5, 0, 400);
                         tagX = block.x;
                         if (tagX < x)
                         {
                             change++;
                         }
+                        lor = 0;
                     }
                     else if (tagX > x && change > 1)
                     {
-                        driveDistance(0, .3, 0, (long) (400 * Math.pow(.75, change)));
+                        driveDistance(0, .5 * Math.pow(.75, change), 0, (long) (400 * Math.pow(.75, change)));
                         tagX = block.x;
                         if (tagX < x)
                         {
                             change++;
                         }
+                        lor = 0;
                     }
                     else if (tagX < x && change == 0)
                     {
-                        driveDistance(0, -.3, 0, 400);
+                        driveDistance(0, -.5, 0, 400);
                         tagX = block.x;
                         if (tagX > x)
                         {
                             change++;
                         }
+                        lor = 1;
                     }
                     else if (tagX < x && change > 1)
                     {
-                        driveDistance(0, -.3, 0, (long) (400 * Math.pow(.75, change)));
+                        driveDistance(0, -.5 * Math.pow(.75, change), 0, (long) (400 * Math.pow(.75, change)));
                         tagX = block.x;
                         if (tagX > x)
                         {
                             change++;
+                        }
+                        lor = 1;
+                    }
+                    else
+                    {
+                        if (lor == 0)
+                        {
+                            driveDistance(0, -.3, 0, 400);
+                        }
+                        else
+                        {
+                            driveDistance(0, .3, 0, 400);
                         }
                     }
                 }

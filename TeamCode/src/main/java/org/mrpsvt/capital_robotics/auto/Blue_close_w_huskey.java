@@ -104,22 +104,13 @@ public class Blue_close_w_huskey extends LinearOpMode
         telemetry.update();
         driveDistance(.5, 0, 0, 1700);
 
-        // drive distance test
-        driveDistance(0, 1, 0, 400);
-        sleep(3000);
-        driveDistance(0, -1, 0, 400);
-        sleep(3000);
-        driveDistance(0, .3, 0, 200);
-        sleep(3000);
-        driveDistance(0, -.3, 0, 200);
-        sleep(3000);
 
         // step 2.5: activate camera homing for x coordinate
-        /*
+
         telemetry.addData("step", "huskey x homing");
         telemetry.update();
         ourHuskeymethod.homingLens();
-        */
+
 
         /*
         //+ to the rigth - to the lefft
