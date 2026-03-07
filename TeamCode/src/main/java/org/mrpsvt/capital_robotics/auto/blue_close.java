@@ -160,11 +160,11 @@ public class blue_close extends LinearOpMode {
 //        Flywheeloff();
 //        sleep(3000);
 
-
+        /*
         telemetry.addData("Step", "6: Strafing right");
         telemetry.update();
         driveDistance(0, 1.5, 0, 700);
-
+        */
 
         telemetry.addData("Status", "Autonomous Complete");
         telemetry.update();
