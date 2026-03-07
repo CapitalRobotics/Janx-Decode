@@ -77,7 +77,7 @@ public class huskylens extends LinearOpMode {
                     int w = 41;
                     int change = 0;
 
-                    while (tagX >= (x - 3) || tagX <= (x + 3))
+                    while (tagX > (x - 3) || tagX < (x + 3))
                     {
                         telemetry.addData("action", "triangulating x");
                         if (tagX > x && change == 0)

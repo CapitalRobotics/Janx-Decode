@@ -83,12 +83,13 @@ public class husky_method
                 int w = 41;
                 int change = 0;
 
-                while (tagX >= (x - 3) || tagX <= (x + 3))
+                // driveDistance(), - = foreward, - = right, unknown
+                while (tagX > (x - 3) || tagX < (x + 3))
                 {
                     telemetry.addData("action", "triangulating x");
                     if (tagX > x && change == 0)
                     {
-                        driveDistance(0, 1, 0, 888);
+                        driveDistance(0, .3, 0, 400);
                         tagX = block.x;
                         if (tagX < x)
                         {
@@ -97,7 +98,7 @@ public class husky_method
                     }
                     else if (tagX > x && change > 1)
                     {
-                        driveDistance(0, 1, 0, (long) (888 * Math.pow(.75, change)));
+                        driveDistance(0, .3, 0, (long) (400 * Math.pow(.75, change)));
                         tagX = block.x;
                         if (tagX < x)
                         {
@@ -106,7 +107,7 @@ public class husky_method
                     }
                     else if (tagX < x && change == 0)
                     {
-                        driveDistance(0, -1, 0, 888);
+                        driveDistance(0, -.3, 0, 400);
                         tagX = block.x;
                         if (tagX > x)
                         {
@@ -115,7 +116,7 @@ public class husky_method
                     }
                     else if (tagX < x && change > 1)
                     {
-                        driveDistance(0, -1, 0, (long) (888 * Math.pow(.75, change)));
+                        driveDistance(0, -.3, 0, (long) (400 * Math.pow(.75, change)));
                         tagX = block.x;
                         if (tagX > x)
                         {
